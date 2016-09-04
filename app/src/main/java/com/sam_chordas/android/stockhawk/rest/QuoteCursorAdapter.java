@@ -40,8 +40,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         robotoLight = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_quote, parent, false);
-        ViewHolder vh = new ViewHolder(itemView);
-        return vh;
+        return new ViewHolder(itemView);
     }
 
     @Override
@@ -50,19 +49,19 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         viewHolder.bidPrice.setText(cursor.getString(cursor.getColumnIndex("bid_price")));
         int sdk = Build.VERSION.SDK_INT;
         if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
-            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.change.setBackgroundDrawable(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                viewHolder.change.setBackground(
                         mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
             } else {
-                viewHolder.change.setBackground(
+                viewHolder.change.setBackgroundDrawable(
                         mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
             }
         } else {
-            if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.change.setBackgroundDrawable(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                viewHolder.change.setBackground(
                         mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
             } else {
-                viewHolder.change.setBackground(
+                viewHolder.change.setBackgroundDrawable(
                         mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
             }
         }
