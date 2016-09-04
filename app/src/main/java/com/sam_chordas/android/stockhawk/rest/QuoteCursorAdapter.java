@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,18 +52,18 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 viewHolder.change.setBackground(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
+                        ContextCompat.getDrawable(mContext, R.drawable.percent_change_pill_green));
             } else {
                 viewHolder.change.setBackgroundDrawable(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
+                        ContextCompat.getDrawable(mContext, R.drawable.percent_change_pill_green));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 viewHolder.change.setBackground(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
+                        ContextCompat.getDrawable(mContext, R.drawable.percent_change_pill_red));
             } else {
                 viewHolder.change.setBackgroundDrawable(
-                        mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
+                        ContextCompat.getDrawable(mContext, R.drawable.percent_change_pill_red));
             }
         }
         if (Utils.showPercent) {

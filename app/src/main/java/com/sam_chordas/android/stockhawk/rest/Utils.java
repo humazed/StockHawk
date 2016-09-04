@@ -19,8 +19,8 @@ public class Utils {
 
     public static ArrayList quoteJsonToContentVals(String JSON) {
         ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
-        JSONObject jsonObject = null;
-        JSONArray resultsArray = null;
+        JSONObject jsonObject;
+        JSONArray resultsArray;
         try {
             jsonObject = new JSONObject(JSON);
             if (jsonObject.length() != 0) {

@@ -18,6 +18,7 @@ import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,6 +43,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
      */
 
     private static final int CURSOR_LOADER_ID = 0;
+    public static final String KEY_SYMBOL = "symbolKey";
+
     boolean isConnected;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -82,9 +85,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
         mCursorAdapter = new QuoteCursorAdapter(this, null);
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
-                (v, position) -> {
-                    //TODO:
-                    // do something on item click
+                new RecyclerViewItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        //TODO:
+                        // do something on item click
+                        Intent intent = new Intent(MyStocksActivity.this, GraphActivity.class);
+                        mCursor.moveToPosition(position);
+                        intent.putExtra(KEY_SYMBOL,
+                                mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL)));
+                        mContext.startActivity(intent);
+                    }
                 }));
         recyclerView.setAdapter(mCursorAdapter);
 
@@ -181,14 +192,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_change_units) {
-            // this is for changing stock changes from percent value to dollar value
-            Utils.showPercent = !Utils.showPercent;
-            this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_change_units:
+                // this is for changing stock changes from percent value to dollar value
+                Utils.showPercent = !Utils.showPercent;
+                this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
