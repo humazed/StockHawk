@@ -17,6 +17,23 @@ public class Utils {
     public static boolean showPercent = true;
     private static String LOG_TAG = Utils.class.getSimpleName();
 
+    public static boolean isSymbolExist(String json) {
+        JSONObject jsonObject;
+        String ask = "null", averageDailyVolume = "null";
+        try {
+            jsonObject = new JSONObject(json)
+                    .getJSONObject("query")
+                    .getJSONObject("results")
+                    .getJSONObject("quote");
+
+            ask = jsonObject.getString("Ask");
+            averageDailyVolume = jsonObject.getString("AverageDailyVolume");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return !(ask.equals("null") && averageDailyVolume.equals("null"));
+    }
+
     public static ArrayList quoteJsonToContentVals(String JSON) {
         ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
         JSONObject jsonObject;

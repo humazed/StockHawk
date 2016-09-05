@@ -18,7 +18,6 @@ import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -85,17 +84,12 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
         mCursorAdapter = new QuoteCursorAdapter(this, null);
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
-                new RecyclerViewItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, int position) {
-                        //TODO:
-                        // do something on item click
-                        Intent intent = new Intent(MyStocksActivity.this, GraphActivity.class);
-                        mCursor.moveToPosition(position);
-                        intent.putExtra(KEY_SYMBOL,
-                                mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL)));
-                        mContext.startActivity(intent);
-                    }
+                (v, position) -> {
+                    Intent intent = new Intent(MyStocksActivity.this, GraphActivity.class);
+                    mCursor.moveToPosition(position);
+                    intent.putExtra(KEY_SYMBOL,
+                            mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL)));
+                    mContext.startActivity(intent);
                 }));
         recyclerView.setAdapter(mCursorAdapter);
 
@@ -110,23 +104,25 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                         .input(R.string.input_hint, R.string.input_prefill, (dialog, input) -> {
                             // On FAB click, receive user input. Make sure the stock doesn't already exist
                             // in the DB and proceed accordingly
-                            Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
-                                    new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
-                                    new String[]{input.toString()}, null);
-                            if ((c != null ? c.getCount() : 0) != 0) {//stock exists
-                                Toast toast =
-                                        Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
-                                                Toast.LENGTH_LONG);
-                                toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
-                                toast.show();
-                            } else {
-                                // Add the stock to DB
-                                mServiceIntent.putExtra("tag", "add");
-                                mServiceIntent.putExtra("symbol", input.toString());
-                                startService(mServiceIntent);
+                            if (input != null && !input.toString().isEmpty() && input.toString().trim().length() > 0) {
+                                Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
+                                        new String[]{QuoteColumns.SYMBOL},
+                                        "UPPER(" + QuoteColumns.SYMBOL + ") = UPPER(?)",
+                                        new String[]{input.toString()}, null);
+                                if ((c != null ? c.getCount() : 0) != 0) {//stock exists
+                                    Toast toast =
+                                            Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
+                                                    Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
+                                    toast.show();
+                                } else {
+                                    // Add the stock to DB
+                                    mServiceIntent.putExtra("tag", "add");
+                                    mServiceIntent.putExtra("symbol", input.toString());
+                                    startService(mServiceIntent);
+                                }
                             }
-                        })
-                        .show();
+                        }).show();
             } else {
                 networkToast();
             }

@@ -11,6 +11,7 @@
 
     <string name="input_prefill" translatable="false"/>
 
-    <string name="string_symbol"  translatable="false">symbol</string>
+    <string name="error_symbol_doesnt">Symbol doesn\'t exist</string>
+    <string name="added_success">Symbol added successfully</string>
 
 </resources>
