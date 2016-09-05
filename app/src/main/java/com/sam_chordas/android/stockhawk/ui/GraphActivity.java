@@ -23,7 +23,6 @@ import java.util.Collections;
  * User: huma
  * Date: 04-Sep-16
  */
-
 public class GraphActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
