@@ -126,7 +126,8 @@ public class StockTaskService extends GcmTaskService {
                         mContext.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);
                     }
-                    if (params.getTag().equals("add")) result = RESULT_ADD_SUCCESS;
+                    if (params.getTag().equals("add")&&Utils.isSymbolExist(getResponse))
+                        result = RESULT_ADD_SUCCESS;
 
                     if (params.getTag().equals("init") || params.getTag().equals("periodic")
                             || Utils.isSymbolExist(getResponse))
