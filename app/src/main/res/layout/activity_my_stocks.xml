@@ -22,7 +22,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/network_error_msg_text_view"/>
+        android:layout_below="@+id/network_error_msg_text_view"
+        android:clipToPadding="false"
+        android:paddingBottom="48dp"/>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

@@ -44,7 +44,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
      */
 
     private static final int CURSOR_LOADER_ID = 0;
-    public static final String KEY_SYMBOL = "symbolKey";
+    public static final String KEY_SYMBOL = "symbol";
+    public static final String KEY_TAG = "tag";
+    public static final String TYPE_ADD = "add";
 
     boolean isConnected;
     /**
@@ -77,7 +79,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         mServiceIntent = new Intent(this, StockIntentService.class);
         if (savedInstanceState == null) {
             // Run the initialize task service so that some stocks appear upon an empty database
-            mServiceIntent.putExtra("tag", "init");
+            mServiceIntent.putExtra(KEY_TAG, "init");
             if (isConnected) {
                 startService(mServiceIntent);
                 networkErrorTextView.setVisibility(View.GONE);
@@ -125,8 +127,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                     toast.show();
                                 } else {
                                     // Add the stock to DB
-                                    mServiceIntent.putExtra("tag", "add");
-                                    mServiceIntent.putExtra("symbol", input.toString());
+                                    mServiceIntent.putExtra(KEY_TAG, TYPE_ADD);
+                                    mServiceIntent.putExtra(KEY_SYMBOL, input.toString());
                                     startService(mServiceIntent);
                                 }
                             }
