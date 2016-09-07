@@ -15,4 +15,10 @@
     <string name="added_success">Symbol added successfully</string>
     <string name="network_error_message">Network is unavailable, the stocks may be outdated.</string>
 
+    <string name="key_symbol" translatable="false">symbol</string>
+    <string name="key_tag" translatable="false">tag</string>
+    <string name="type_add" translatable="false">add</string>
+    <string name="type_init" translatable="false">init</string>
+
+
 </resources>

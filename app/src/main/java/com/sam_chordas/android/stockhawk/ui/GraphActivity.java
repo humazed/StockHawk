@@ -52,8 +52,8 @@ public class GraphActivity extends AppCompatActivity implements
         ;
 
         Bundle args = new Bundle();
-        args.putString(MyStocksActivity.KEY_SYMBOL,
-                getIntent().getStringExtra(MyStocksActivity.KEY_SYMBOL));
+        args.putString(getString(R.string.key_symbol),
+                getIntent().getStringExtra(getString(R.string.key_symbol)));
         getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);
     }
 
@@ -63,7 +63,7 @@ public class GraphActivity extends AppCompatActivity implements
         return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
                 new String[]{QuoteColumns.BIDPRICE},
                 QuoteColumns.SYMBOL + " = ?",
-                new String[]{args.getString(MyStocksActivity.KEY_SYMBOL)},
+                new String[]{args.getString(getString(R.string.key_symbol))},
                 null);
     }
 

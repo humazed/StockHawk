@@ -44,9 +44,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
      */
 
     private static final int CURSOR_LOADER_ID = 0;
-    public static final String KEY_SYMBOL = "symbol";
-    public static final String KEY_TAG = "tag";
-    public static final String TYPE_ADD = "add";
 
     boolean isConnected;
     /**
@@ -79,7 +76,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         mServiceIntent = new Intent(this, StockIntentService.class);
         if (savedInstanceState == null) {
             // Run the initialize task service so that some stocks appear upon an empty database
-            mServiceIntent.putExtra(KEY_TAG, "init");
+            mServiceIntent.putExtra(getString(R.string.key_tag), getString(R.string.type_init));
             if (isConnected) {
                 startService(mServiceIntent);
                 networkErrorTextView.setVisibility(View.GONE);
@@ -97,7 +94,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 (v, position) -> {
                     Intent intent = new Intent(MyStocksActivity.this, GraphActivity.class);
                     mCursor.moveToPosition(position);
-                    intent.putExtra(KEY_SYMBOL,
+                    intent.putExtra(getString(R.string.key_symbol),
                             mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL)));
                     mContext.startActivity(intent);
                 }));
@@ -127,8 +124,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                     toast.show();
                                 } else {
                                     // Add the stock to DB
-                                    mServiceIntent.putExtra(KEY_TAG, TYPE_ADD);
-                                    mServiceIntent.putExtra(KEY_SYMBOL, input.toString());
+                                    mServiceIntent.putExtra(getString(R.string.key_tag), getString(R.string.type_add));
+                                    mServiceIntent.putExtra(getString(R.string.key_symbol), input.toString());
                                     startService(mServiceIntent);
                                 }
                             }
