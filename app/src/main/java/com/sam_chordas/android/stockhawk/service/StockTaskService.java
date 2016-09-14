@@ -68,7 +68,7 @@ public class StockTaskService extends GcmTaskService {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        if (params.getTag().equals(getString(R.string.type_init)) || params.getTag().equals("periodic")) {
+        if (params.getTag().equals(getString(R.string.type_init)) || params.getTag().equals(getString(R.string.tag_periodic))) {
             isUpdate = true;
             initQueryCursor = mContext.getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                     new String[]{"Distinct " + QuoteColumns.SYMBOL}, null,
@@ -130,7 +130,7 @@ public class StockTaskService extends GcmTaskService {
                     if (params.getTag().equals(getString(R.string.type_add)) && Utils.isSymbolExist(getResponse))
                         result = RESULT_ADD_SUCCESS;
 
-                    if (params.getTag().equals(getString(R.string.type_init)) || params.getTag().equals("periodic")
+                    if (params.getTag().equals(getString(R.string.type_init)) || params.getTag().equals(getString(R.string.tag_periodic))
                             || Utils.isSymbolExist(getResponse))
                         mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
                                 Utils.quoteJsonToContentVals(getResponse));

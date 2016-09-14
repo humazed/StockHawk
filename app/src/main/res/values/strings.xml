@@ -19,6 +19,8 @@
     <string name="key_tag" translatable="false">tag</string>
     <string name="type_add" translatable="false">add</string>
     <string name="type_init" translatable="false">init</string>
+    <string name="tag_periodic" translatable="false">periodic</string>
+    <string name="ms_stock_already_seved" translatable="false">This stock is already saved!</string>
 
 
 </resources>

@@ -118,7 +118,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                         new String[]{input.toString()}, null);
                                 if ((c != null ? c.getCount() : 0) != 0) {//stock exists
                                     Toast toast =
-                                            Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
+                                            Toast.makeText(MyStocksActivity.this, R.string.ms_stock_already_seved,
                                                     Toast.LENGTH_LONG);
                                     toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                                     toast.show();
@@ -144,7 +144,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         if (isConnected) {
             long period = 3600L;
             long flex = 10L;
-            String periodicTag = "periodic";
+            String periodicTag = getString(R.string.tag_periodic);
 
             // create a periodic task to pull stocks once every hour after the app has been opened. This
             // is so Widget data stays up to date.
